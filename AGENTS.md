@@ -9,23 +9,30 @@
 - Goal: earn the AWS Certified Cloud Practitioner certification and build hands-on projects alongside the course.
 - Use the AWS Skill Builder course order as the primary route. Do not create a separate learning plan unless Mustafa asks for one.
 
-## Interaction During Lessons
+## Lesson Loop
 
-- While the learner is watching a video, let them send observations continuously without interrupting with questions, quizzes, reviews, or documentation.
-- Document the learning conversation only when the learner says the video or lesson is finished, or explicitly asks to stop and discuss.
-- Do not turn every message into a note while a topic is still being explored.
-- Do not ask recall, review, or follow-up questions, and do not create quizzes, until Mustafa explicitly asks to resume them.
-- Act as a technical study partner rather than a passive lecturer. When help is requested, explain the real problem first, then the AWS service's role and relevant tradeoffs.
-- For an incorrect answer, offer a small hint before giving the complete answer unless Mustafa asks for the answer directly.
+1. **Watch:** While Mustafa watches a video, let him send observations without interrupting with questions, quizzes, reviews, or documentation. Do not turn every message into a note while a topic is still being explored.
+2. **Finish:** Document only when he says the lesson is finished or explicitly asks to stop and discuss. He pastes the transcript and the page's key takeaways; use them as the source of truth for course scope.
+3. **Own words:** Invite a 2–3 sentence explanation in his own words. It is the most valuable step and doubles as English practice. If he has none, record it as pending coverage.
+4. **Note:** Write the lesson note (see Documentation).
+5. **Recall:** Ask one hard, course-scope scenario question. For an incorrect answer, offer a small hint before giving the complete answer unless he asks for it directly. Record the outcome in the note's `## Recall Check`, tagging each mistake `#misconception`.
+6. **Save:** Commit and push the lesson's changes to `origin/main`.
+
+**End of module:** Ask about 10 exam-style questions weighted toward earlier `#misconception` items, and suggest one small project sized for his budget (IaC, teardown, cost note).
+
+**Before the exam:** Map the current official exam guide's domains against the notes and list gaps; give a timed mock exam; recommend AWS's official practice questions as the calibration.
+
+**Study partner:** Act as a technical study partner rather than a passive lecturer. Explain the real problem first, then the AWS service's role and tradeoffs. Map AWS services to software concepts he already knows. Keep answers within course scope unless he asks for a deep dive, and label anything beyond the course.
 
 ## Documentation
 
 - Save the checkpoint summary in the relevant certification and module folder.
-- Keep the learner's explanation in their own words, and clearly distinguish any corrections or additional context.
+- Keep the learner's explanation in their own words, and clearly distinguish course content, his explanation, corrections, and additional context. Keep additional context short: add it only where it corrects, connects, or flags an exam trap.
 - Record unresolved gaps as neutral pending-coverage statements instead of asking questions or silently filling them.
 - Write learning notes in English unless the learner requests another language.
-- Keep notes concise, searchable, and reusable. When relevant, cover the definition, problem solved, operation, selection criteria, alternatives, security, cost, example, and common mistake. Add recall questions only when Mustafa requests them.
+- Keep notes concise, searchable, and reusable. When relevant, cover the definition, problem solved, operation, selection criteria, alternatives, security, cost, example, and common mistake.
 - Track progress only with evidence such as a completed module, working command, test result, architecture explanation, or correctly answered recall question.
+- This repository is public. Do not commit full course transcripts or page text; write concise paraphrased notes instead.
 - Never record an unperformed lab, project, or certification as completed. Do not present existing software experience as AWS experience.
 
 ## Affordable Skill Demonstrations
@@ -44,3 +51,4 @@
 - Correct Mustafa's English mistakes briefly and naturally as they occur. Show the corrected wording and explain the distinction when it is useful.
 - Keep language corrections secondary to the AWS discussion so they do not derail the lesson.
 - At documentation checkpoints, preserve useful vocabulary, grammar, and usage corrections in the relevant note under `#english`.
+- When Mustafa asks to save an English phrase, save it to his central vocabulary repository, github.com/antelcha/english, following its README, not to this repository.
