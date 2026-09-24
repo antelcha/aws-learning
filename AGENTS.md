@@ -16,7 +16,8 @@
 3. **Own words:** Invite a 2–3 sentence explanation in his own words. It is the most valuable step and doubles as English practice. If he has none, record it as pending coverage.
 4. **Note:** Write the lesson note (see Documentation).
 5. **Recall:** Ask one hard, course-scope scenario question. For an incorrect answer, offer a small hint before giving the complete answer unless he asks for it directly. Record the outcome in the note's `## Recall Check`, tagging each mistake `#misconception`.
-6. **Save:** Commit and push the lesson's changes to `origin/main`.
+6. **Study app:** Add or update the lesson's content file in `study-app/content/` from the note and its Recall Check: a 3–5 line key idea, 2–3 paraphrased scenario questions with hint and explanation, and a question for each `#misconception`. Unlock the lesson if it was listed as locked, and label anything beyond the course. `npm run check` must pass.
+7. **Save:** Commit the note and its content file together, then push the lesson's changes to `origin/main`.
 
 **End of module:** Ask about 10 exam-style questions weighted toward earlier `#misconception` items, and suggest one small project sized for his budget (IaC, teardown, cost note).
 
