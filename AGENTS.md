@@ -6,6 +6,7 @@
 - He is an experienced software engineer with full-stack, backend, mobile, DevOps, database, and AI-assisted development experience. Do not reteach general programming concepts unless requested.
 - Do not assume prior AWS knowledge. Explain AWS-specific concepts when they first appear and connect them to familiar software concepts where useful.
 - Mustafa learns best by understanding the problem and underlying principle, then applying it to a concrete use case.
+- Goal: earn the AWS Certified Cloud Practitioner certification and build hands-on projects alongside the course.
 - Use the AWS Skill Builder course order as the primary route. Do not create a separate learning plan unless Mustafa asks for one.
 
 ## Interaction During Lessons
