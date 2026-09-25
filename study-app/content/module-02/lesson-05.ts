@@ -5,7 +5,7 @@ const lesson: Lesson = {
   module: 'module-02',
   order: 5,
   title: 'Amazon EC2 Pricing',
-  note: '../AWS-Cloud-Practitioner/02-Compute-in-the-Cloud/00-Module-Overview.md',
+  note: '../AWS-Cloud-Practitioner/02-Compute-in-the-Cloud/05-Amazon-EC2-Pricing.md',
   keyIdea: [
     'On-Demand: pay per use with no commitment; suits short-term, unpredictable, or new workloads.',
     'Savings Plans (up to 72% off) and Reserved Instances (up to 75% off) trade a 1- or 3-year commitment for a discount.',
