@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+<title>Mikroservis Kahvehanesi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#EEF2F0; --surface:#FAFCFB; --sunk:#E2E8E5; --ink:#15201D; --muted:#56655F; --line:#C5D0CB;
+  --accent:#B8691A; --accent-soft:#F3E3CF; --ok:#2E7A58; --ok-soft:#D8ECE2; --bad:#B0362D; --bad-soft:#F4DAD6;
+  --code-bg:#1C2624; --code-ink:#DCE7E3; --code-dim:#8FA39C; --code-key:#E7A35A; --code-str:#9FD3B5;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F1614; --surface:#161F1C; --sunk:#1D2825; --ink:#E4ECE9; --muted:#96A7A1; --line:#2C3A36;
+    --accent:#E39A4F; --accent-soft:#3A2A19; --ok:#5DBB8E; --ok-soft:#1B3328; --bad:#E57067; --bad-soft:#3B1E1B;
+    --code-bg:#0A100E; --code-ink:#DCE7E3; --code-dim:#7D918A; --code-key:#E7A35A; --code-str:#9FD3B5;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F1614; --surface:#161F1C; --sunk:#1D2825; --ink:#E4ECE9; --muted:#96A7A1; --line:#2C3A36;
+  --accent:#E39A4F; --accent-soft:#3A2A19; --ok:#5DBB8E; --ok-soft:#1B3328; --bad:#E57067; --bad-soft:#3B1E1B;
+  --code-bg:#0A100E; --code-ink:#DCE7E3; --code-dim:#7D918A; --code-key:#E7A35A; --code-str:#9FD3B5;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:20px;padding-block:40px 80px;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--display);line-height:1.12;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6vw,58px);font-weight:700;letter-spacing:-.02em}
+h2{font-size:clamp(24px,3.4vw,34px);font-weight:700;letter-spacing:-.01em}
+h3{font-size:19px;font-weight:700}
+p{margin:0;max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:19px;color:var(--muted);max-width:60ch}
+section{display:flex;flex-direction:column;gap:18px}
+.scope{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:4px;width:fit-content}
+.scope.course{background:var(--ok-soft);color:var(--ok)}
+.scope.beyond{background:var(--accent-soft);color:var(--accent)}
+code,.mono{font-family:var(--mono);font-size:.92em}
+p code{background:var(--sunk);padding:1px 5px;border-radius:3px}
+
+/* Hero */
+header{display:flex;flex-direction:column;gap:14px}
+
+/* Simulator */
+.sim{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:18px}
+.modes{display:flex;flex-wrap:wrap;gap:8px}
+.mode{font:inherit;font-size:14px;font-weight:600;padding:9px 14px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
+.mode[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.mode:focus-visible,.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mode-desc{color:var(--muted);font-size:15px;min-height:3.2em}
+.stage{display:grid;grid-template-columns:1fr auto 1.1fr auto 1fr;align-items:stretch;gap:10px}
+.stage.mono-mode{grid-template-columns:1fr}
+.svc{border:2px solid var(--ok);background:var(--ok-soft);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px;min-width:0;transition:background .25s,border-color .25s}
+.svc.down{border-color:var(--bad);background:var(--bad-soft)}
+.svc .name{font-family:var(--display);font-weight:700;font-size:17px}
+.svc .role{font-size:13px;color:var(--muted)}
+.svc .state{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--ok)}
+.svc.down .state{color:var(--bad)}
+.workers{display:flex;flex-wrap:wrap;gap:4px}
+.worker{font-family:var(--mono);font-size:11px;padding:2px 6px;border-radius:3px;background:var(--surface);border:1px solid var(--line)}
+.link{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-family:var(--mono);font-size:11px;color:var(--muted);min-width:44px;text-align:center}
+.link .arrow{font-size:20px;line-height:1;color:var(--ink)}
+.queue{border:2px dashed var(--accent);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;min-width:0;background:var(--surface)}
+.queue .name{font-family:var(--display);font-weight:700;font-size:17px;color:var(--accent)}
+.tickets{display:flex;flex-wrap:wrap;gap:5px;min-height:28px;align-content:flex-start}
+.ticket{font-family:var(--mono);font-size:11px;padding:3px 6px;border-radius:3px;background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent)}
+.empty{font-size:12px;color:var(--muted);font-style:italic}
+.monobox{border:2px solid var(--ok);background:var(--ok-soft);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:10px;transition:background .25s,border-color .25s}
+.monobox.down{border-color:var(--bad);background:var(--bad-soft)}
+.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.module{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:10px;font-size:14px}
+.module b{font-family:var(--display);display:block;font-size:15px}
+.module.down{border-color:var(--bad);color:var(--bad)}
+.fanout{display:flex;flex-wrap:wrap;gap:6px}
+.chan{font-family:var(--mono);font-size:11px;padding:3px 7px;border-radius:3px;border:1px solid var(--line);background:var(--surface);color:var(--muted);transition:all .2s}
+.chan.lit{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+.controls{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:inherit;font-size:14px;font-weight:600;padding:9px 14px;border-radius:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.danger{border-color:var(--bad);color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stat{border-top:2px solid var(--line);padding-top:6px}
+.stat .v{font-family:var(--display);font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.stat .k{font-size:12px;color:var(--muted)}
+.stat.good{border-color:var(--ok)} .stat.bad{border-color:var(--bad)} .stat.q{border-color:var(--accent)}
+.log{font-family:var(--mono);font-size:12px;background:var(--sunk);border-radius:6px;padding:10px 12px;height:138px;overflow:auto;display:flex;flex-direction:column;gap:2px}
+.log .e{color:var(--bad)} .log .o{color:var(--ok)} .log .q{color:var(--accent)}
+
+/* Content blocks */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.tree{font-family:var(--mono);font-size:13px;line-height:1.55;white-space:pre;overflow-x:auto;margin:0;color:var(--ink)}
+.tree .d{color:var(--muted)}
+pre.code{background:var(--code-bg);color:var(--code-ink);font-family:var(--mono);font-size:13px;line-height:1.55;padding:14px 16px;border-radius:8px;overflow-x:auto;margin:0}
+pre.code .c{color:var(--code-dim)} pre.code .k{color:var(--code-key)} pre.code .s{color:var(--code-str)}
+.traits{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.trait{border-left:3px solid var(--ok);padding:4px 0 4px 12px;display:flex;flex-direction:column;gap:4px}
+.trait b{font-family:var(--display);font-size:16px}
+.trait span{font-size:15px;color:var(--muted)}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td:first-child{font-weight:600}
+.callout{border:1px solid var(--accent);background:var(--accent-soft);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.callout b{color:var(--accent)}
+ul.clean{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;max-width:70ch}
+footer{color:var(--muted);font-size:13px;border-top:1px solid var(--line);padding-top:16px}
+
+@media (max-width:760px){
+  .stage{grid-template-columns:1fr}
+  .link{flex-direction:row;min-height:28px}
+  .link .arrow{transform:rotate(90deg)}
+  .two,.traits{grid-template-columns:1fr}
+  .modules{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">AWS Cloud Practitioner · Modül 2 · Messaging and Queuing</span>
+  <h1>Mikroservis Kahvehanesi</h1>
+  <p class="lede">Kasiyer, barista ve "siparişin hazır" bildirimi. Aynı kahve dükkânını üç farklı mimariyle çalıştır, baristayı çökert ve sistemin geri kalanına ne olduğunu izle.</p>
+</header>
+
+<section aria-labelledby="sim-h">
+  <span class="scope course">Kurs kapsamı</span>
+  <h2 id="sim-h">Simülatör: bir parça çökünce ne olur?</h2>
+  <div class="sim">
+    <div class="modes" role="group" aria-label="Mimari">
+      <button class="mode" id="m-mono" data-mode="mono" aria-pressed="false">Monolit</button>
+      <button class="mode" id="m-direct" data-mode="direct" aria-pressed="false">Mikroservis · direkt çağrı</button>
+      <button class="mode" id="m-queue" data-mode="queue" aria-pressed="true">Mikroservis · SQS + SNS</button>
+    </div>
+    <p class="mode-desc" id="mode-desc"></p>
+
+    <div id="stage"></div>
+
+    <div class="controls">
+      <button class="btn primary" id="b-order">Sipariş ver</button>
+      <button class="btn" id="b-rush">Yoğunluk: 6 sipariş</button>
+      <button class="btn danger" id="b-crash">Baristayı çökert</button>
+      <button class="btn" id="b-scale">Barista ekle (scale out)</button>
+      <button class="btn" id="b-reset">Sıfırla</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat good"><div class="v" id="s-acc">0</div><div class="k">Alınan sipariş</div></div>
+      <div class="stat good"><div class="v" id="s-done">0</div><div class="k">Hazırlanan içecek</div></div>
+      <div class="stat bad"><div class="v" id="s-fail">0</div><div class="k">Kaybedilen sipariş</div></div>
+      <div class="stat q"><div class="v" id="s-q">0</div><div class="k">Kuyrukta bekleyen</div></div>
+    </div>
+    <div class="log" id="log" aria-live="polite"></div>
+  </div>
+  <p>Denemek için: SQS modunda baristayı çökert, birkaç sipariş ver, sonra baristayı geri getir. Hiçbir sipariş kaybolmaz; kuyruk birikir, sonra erir. Aynı şeyi "direkt çağrı" modunda yap: kasiyer ayakta olsa bile siparişler hata verir. Buna <b>tightly coupled</b> denir.</p>
+</section>
+
+<section aria-labelledby="what-h">
+  <span class="scope beyond">Kurs dışı derinlik</span>
+  <h2 id="what-h">"Mikroservis yazmak" pratikte ne demek?</h2>
+  <p>Bir mikroservis, tek bir iş yeteneğini üstlenen, <b>kendi başına deploy edilen</b> küçük bir uygulamadır. Kod yazma şeklin çok değişmez: yine bir Express, FastAPI ya da Spring uygulaması yazarsın. Değişen şey sınırlardır. Modüller aynı process içinde fonksiyon çağırmak yerine ağ üzerinden, sözleşmeyle konuşur.</p>
+  <div class="traits">
+    <div class="trait"><b>Tek sorumluluk</b><span>Sipariş servisi sipariş alır. İçecek yapmayı bilmez.</span></div>
+    <div class="trait"><b>Bağımsız deploy</b><span>Barista servisini güncellemek kasiyeri yeniden başlatmaz. Her servisin kendi pipeline'ı var.</span></div>
+    <div class="trait"><b>Kendi verisi</b><span>Her servisin kendi veritabanı var. Başka servisin tablosuna doğrudan dokunmaz, onun API'sini ya da mesajını kullanır.</span></div>
+    <div class="trait"><b>Sözleşmeyle iletişim</b><span>HTTP API (senkron) ya da kuyruk/olay mesajı (asenkron). Mesajın şekli, servisler arası sözleşmedir.</span></div>
+  </div>
+</section>
+
+<section aria-labelledby="look-h">
+  <span class="scope beyond">Kurs dışı derinlik</span>
+  <h2 id="look-h">Nasıl görünür: repo yapısı</h2>
+  <div class="two">
+    <div class="panel">
+      <h3>Monolit</h3>
+<pre class="tree">coffee-app/
+├── src/
+│   ├── orders/      <span class="d"># sipariş modülü</span>
+│   ├── barista/     <span class="d"># içecek modülü</span>
+│   ├── notify/      <span class="d"># bildirim modülü</span>
+│   └── server.ts    <span class="d"># tek process</span>
+├── db/              <span class="d"># tek ortak veritabanı</span>
+└── Dockerfile       <span class="d"># tek imaj, tek deploy</span></pre>
+      <p>Modüller birbirini fonksiyon olarak çağırır: <code>barista.make(order)</code>. Hızlı ve basit, ama biri çökerse process'in tamamı düşer. Ölçeklemek için de uygulamanın tamamını kopyalarsın.</p>
+    </div>
+    <div class="panel">
+      <h3>Mikroservisler</h3>
+<pre class="tree">order-service/       <span class="d"># kendi repo'su ya da klasörü</span>
+├── src/  Dockerfile  <span class="d">+ kendi DB'si</span>
+barista-service/
+├── src/  Dockerfile  <span class="d">+ kendi DB'si</span>
+notify-service/
+├── src/  Dockerfile
+infra/               <span class="d"># IaC: kuyruk, topic, servisler</span>
+└── orders-queue (SQS), drink-ready (SNS)</pre>
+      <p>Her servis ayrı çalışır ve ayrı ölçeklenir. Aralarındaki bağ bir SQS kuyruğu ya da SNS topic'i. Barista servisi çökerse sipariş servisi bundan haberdar bile olmaz.</p>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="code-h">
+  <span class="scope beyond">Kurs dışı derinlik</span>
+  <h2 id="code-h">Nasıl görünür: kod</h2>
+  <p>AWS SDK for JavaScript (v3) ile üç servisin iletişim kısmı. İş mantığı sıradan kod; mikroservisi mikroservis yapan, aradaki bu birkaç satır.</p>
+  <div class="two">
+    <div class="panel">
+      <h3>order-service · kuyruğa yaz</h3>
+<pre class="code"><span class="k">import</span> { SQSClient, SendMessageCommand } <span class="k">from</span> <span class="s">"@aws-sdk/client-sqs"</span>;
+<span class="k">const</span> sqs = <span class="k">new</span> SQSClient({});
+
+app.post(<span class="s">"/orders"</span>, <span class="k">async</span> (req, res) =&gt; {
+  <span class="k">const</span> order = { id: crypto.randomUUID(), ...req.body };
+  <span class="c">// Baristayı çağırmaz; siparişi panoya asar.</span>
+  <span class="k">await</span> sqs.send(<span class="k">new</span> SendMessageCommand({
+    QueueUrl: process.env.ORDERS_QUEUE_URL,
+    MessageBody: JSON.stringify(order),  <span class="c">// payload</span>
+  }));
+  res.status(<span class="s">202</span>).json({ id: order.id }); <span class="c">// "alındı"</span>
+});</pre>
+    </div>
+    <div class="panel">
+      <h3>barista-service · kuyruktan oku</h3>
+<pre class="code"><span class="k">while</span> (<span class="k">true</span>) {
+  <span class="k">const</span> { Messages } = <span class="k">await</span> sqs.send(<span class="k">new</span> ReceiveMessageCommand({
+    QueueUrl, MaxNumberOfMessages: <span class="s">10</span>,
+    WaitTimeSeconds: <span class="s">20</span>,  <span class="c">// long polling</span>
+  }));
+  <span class="k">for</span> (<span class="k">const</span> m <span class="k">of</span> Messages ?? []) {
+    <span class="k">await</span> makeDrink(JSON.parse(m.Body!));
+    <span class="c">// İş bitince sil; bitmezse mesaj kuyrukta kalır.</span>
+    <span class="k">await</span> sqs.send(<span class="k">new</span> DeleteMessageCommand({
+      QueueUrl, ReceiptHandle: m.ReceiptHandle! }));
+    <span class="k">await</span> sns.send(<span class="k">new</span> PublishCommand({
+      TopicArn: DRINK_READY_TOPIC, Message: m.Body! }));
+  }
+}</pre>
+    </div>
+  </div>
+  <p>Son satırdaki <code>PublishCommand</code> SNS'e tek bir mesaj yollar. SNS onu topic'e abone olan herkese dağıtır (fan-out): e-posta, SMS, mobil push ya da başka bir servis. Barista, bildirimi kimin aldığını bilmez.</p>
+</section>
+
+<section aria-labelledby="aws-h">
+  <span class="scope course">Kurs kapsamı</span>
+  <h2 id="aws-h">Hangi AWS servisi ne zaman?</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Servis</th><th>Model</th><th>Kahvehanede</th><th>Ne zaman</th></tr></thead>
+      <tbody>
+        <tr><td>Amazon SQS</td><td>Kuyruk: mesaj işlenene kadar saklanır</td><td>Sipariş panosu</td><td>Bir iş, tüketici müsait olunca işlensin; tüketici çökse bile mesaj kaybolmasın</td></tr>
+        <tr><td>Amazon SNS</td><td>Publish-subscribe: topic'e gelen mesaj abonelere hemen dağıtılır</td><td>"Rudy'nin içeceği hazır!" anonsu</td><td>Bir olayı aynı anda birçok alıcıya iletmek; e-posta, SMS, mobil push</td></tr>
+        <tr><td>Amazon EventBridge</td><td>Olay yönlendirme: olayları filtreler ve ilgili hedeflere iletir</td><td>"Sipariş alındı" olayını ödeme, stok ve teslimata yönlendiren sistem</td><td>Uygulamalar, AWS servisleri ve üçüncü parti yazılımlardan gelen olayları kurallara göre dağıtmak</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout">
+    <p><b>Sınav tuzağı:</b> "Servis geçici olarak kapalıyken veri kaybolmasın, sonra işlensin" diyorsa cevap SQS'tir. "Birçok aboneye aynı anda bildirim gönder" diyorsa SNS'tir. "Bir bileşen çökünce diğerleri çalışmaya devam etsin" ifadesi <b>loosely coupled</b> mimariyi tarif eder.</p>
+  </div>
+</section>
+
+<section aria-labelledby="trade-h">
+  <span class="scope beyond">Kurs dışı derinlik</span>
+  <h2 id="trade-h">Bedeli: mikroservis bedava değil</h2>
+  <p>Kurs, mikroservisin avantajlarını anlatıyor. Gerçek hayatta bir de fatura ve operasyon yükü var:</p>
+  <ul class="clean">
+    <li><b>Ağ hatası yeni bir hata türü.</b> Fonksiyon çağrısı neredeyse hiç başarısız olmaz; ağ çağrısı olur. Retry, timeout ve aynı mesajın iki kez işlenmesi (idempotency) senin sorunun olur.</li>
+    <li><b>Tutarlılık gecikir.</b> Sipariş "alındı" dendiği anda içecek henüz yok. Buna eventual consistency denir; arayüzün bunu göstermesi gerekir.</li>
+    <li><b>Hata ayıklama zorlaşır.</b> Bir istek dört servisten geçiyorsa, tek bir log dosyası yetmez. Dağıtık izleme (tracing) gerekir.</li>
+    <li><b>Maliyet ve iş yükü artar.</b> Her servis için ayrı deploy, izleme ve sürekli çalışan kaynak. Küçük bir ekip için bu, kazandığından fazlasını alabilir.</li>
+  </ul>
+  <div class="callout">
+    <p><b>Pratik öneri:</b> Tek geliştirici ya da küçük ekip için en iyi başlangıç genelde <b>modüler monolit</b>tir: tek deploy, ama modüller arasında net sınırlar. Bir modülün ölçeklenme ihtiyacı ya da ekibi gerçekten ayrışınca onu servise çıkarırsın. Önce ayrılan parça genelde kuyruğun arkasındaki yavaş iş olur, bu simülatördeki barista gibi.</p>
+  </div>
+</section>
+
+<footer>Kurs kapsamındaki bölümler Messaging and Queuing dersini özetler. "Kurs dışı derinlik" bölümleri ek bağlamdır ve sınavda bu ayrıntıda sorulmaz. Simülatördeki süreler temsilidir.</footer>
+</div>
+
+<script>
+(function(){
+  var MODES = {
+    mono: "Tek uygulama, tek process. Sipariş, içecek ve bildirim modülleri birbirini fonksiyon olarak çağırır. Barista modülü çökerse bütün uygulama düşer.",
+    direct: "Üç ayrı servis, ama kasiyer baristayı doğrudan (senkron HTTP) çağırıyor. Barista cevap vermezse kasiyerin isteği de hata verir: tightly coupled.",
+    queue: "Kasiyer siparişi SQS kuyruğuna bırakır ve hemen \"alındı\" der. Barista hazır oldukça kuyruktan alır. İçecek bitince SNS herkese duyurur: loosely coupled."
+  };
+  var DRINKS = ["Latte","Espresso","Flat White","Cold Brew","Mocha","Americano","Cortado","Chai Latte"];
+  var st;
+  function fresh(mode){ return {mode:mode, baristaUp:true, workers:1, queue:[], busy:[], acc:0, done:0, fail:0, n:0}; }
+  st = fresh("queue");
+
+  var $ = function(id){ return document.getElementById(id); };
+  var logEl = $("log");
+  function log(msg, cls){
+    var d = document.createElement("div"); if(cls) d.className = cls;
+    var t = new Date(); d.textContent = ("0"+t.getMinutes()).slice(-2)+":"+("0"+t.getSeconds()).slice(-2)+"  "+msg;
+    logEl.appendChild(d); while(logEl.children.length>60) logEl.removeChild(logEl.firstChild);
+    logEl.scrollTop = logEl.scrollHeight;
+  }
+
+  function flash(){
+    var chans = document.querySelectorAll(".chan");
+    chans.forEach(function(c){ c.classList.add("lit"); });
+    setTimeout(function(){ chans.forEach(function(c){ c.classList.remove("lit"); }); }, 700);
+  }
+
+  function render(){
+    var s = $("stage"); var m = st.mode;
+    document.querySelectorAll(".mode").forEach(function(b){ b.setAttribute("aria-pressed", String(b.dataset.mode===m)); });
+    $("mode-desc").textContent = MODES[m];
+    var up = st.baristaUp;
+    if(m==="mono"){
+      s.className = "stage mono-mode";
+      s.innerHTML =
+        '<div class="monobox'+(up?'':' down')+'">'+
+          '<div class="name" style="font-family:var(--display);font-weight:700;font-size:17px">coffee-app <span class="mono" style="font-weight:400;font-size:12px;color:var(--muted)">(tek process)</span></div>'+
+          '<div class="modules">'+
+            '<div class="module'+(up?'':' down')+'"><b>orders</b>'+(up?'çalışıyor':'process ile birlikte düştü')+'</div>'+
+            '<div class="module'+(up?'':' down')+'"><b>barista</b>'+(up?'çalışıyor':'çöktü')+'</div>'+
+            '<div class="module'+(up?'':' down')+'"><b>notify</b>'+(up?'çalışıyor':'process ile birlikte düştü')+'</div>'+
+          '</div>'+
+          '<div class="state mono" style="font-size:12px;color:'+(up?'var(--ok)':'var(--bad)')+'">'+(up?'UP · tek kopya':'DOWN · bütün uygulama erişilemez')+'</div>'+
+        '</div>';
+    } else {
+      s.className = "stage";
+      var middle = m==="queue"
+        ? '<div class="queue"><div class="name">orders-queue</div><div class="role" style="font-size:13px;color:var(--muted)">Amazon SQS</div><div class="tickets">'+
+            (st.queue.length? st.queue.map(function(o){return '<span class="ticket">#'+o.id+' '+o.drink+'</span>';}).join('') : '<span class="empty">Kuyruk boş</span>')+
+          '</div></div>'
+        : '<div class="queue" style="border-color:var(--line)"><div class="name" style="color:var(--muted)">Kuyruk yok</div><div class="role" style="font-size:13px;color:var(--muted)">Kasiyer, baristanın cevabını bekler</div></div>';
+      var workers = ''; for(var i=0;i<st.workers;i++){ workers += '<span class="worker">'+(st.busy[i]?('#'+st.busy[i].id+' hazırlanıyor'):'boşta')+'</span>'; }
+      s.innerHTML =
+        '<div class="svc"><div class="name">order-service</div><div class="role">Kasiyer · siparişi alır</div><div class="state">UP</div></div>'+
+        '<div class="link"><span class="arrow">→</span>'+(m==="queue"?'SendMessage':'HTTP POST')+'</div>'+
+        middle+
+        '<div class="link"><span class="arrow">→</span>'+(m==="queue"?'Receive':'')+'</div>'+
+        '<div class="svc'+(up?'':' down')+'"><div class="name">barista-service</div><div class="role">İçeceği hazırlar</div><div class="state">'+(up?'UP · '+st.workers+' kopya':'DOWN')+'</div><div class="workers">'+(up?workers:'')+'</div>'+
+          (m==="queue"?'<div class="role" style="margin-top:4px">SNS ile duyurur:</div><div class="fanout"><span class="chan">e-posta</span><span class="chan">SMS</span><span class="chan">mobil push</span></div>':'')+
+        '</div>';
+    }
+    $("s-acc").textContent = st.acc; $("s-done").textContent = st.done; $("s-fail").textContent = st.fail; $("s-q").textContent = st.queue.length;
+    $("b-crash").textContent = up ? "Baristayı çökert" : "Baristayı geri getir";
+    $("b-scale").disabled = (m==="mono");
+    $("b-scale").title = m==="mono" ? "Monolitte yalnızca baristayı ölçekleyemezsin; bütün uygulamayı kopyalarsın." : "";
+  }
+
+  function order(){
+    st.n++; var o = {id: st.n, drink: DRINKS[(st.n-1)%DRINKS.length]};
+    var m = st.mode;
+    if(m==="mono"){
+      if(!st.baristaUp){ st.fail++; log("#"+o.id+" "+o.drink+": uygulama çökük, sipariş alınamadı (503)","e"); }
+      else { st.acc++; startDrink(o); log("#"+o.id+" "+o.drink+": alındı, aynı process içinde hazırlanıyor","o"); }
+    } else if(m==="direct"){
+      if(!st.baristaUp){ st.fail++; log("#"+o.id+" "+o.drink+": kasiyer baristayı çağırdı, cevap yok, istek hata verdi (504)","e"); }
+      else if(freeWorker()<0){ st.fail++; log("#"+o.id+" "+o.drink+": bütün baristalar meşgul, çağrı zaman aşımına uğradı","e"); }
+      else { st.acc++; startDrink(o); log("#"+o.id+" "+o.drink+": barista hemen aldı","o"); }
+    } else {
+      st.acc++; st.queue.push(o); log("#"+o.id+" "+o.drink+": kuyruğa yazıldı, kasiyer sıradaki müşteriye geçti","q");
+    }
+    render();
+  }
+  function freeWorker(){ for(var i=0;i<st.workers;i++){ if(!st.busy[i]) return i; } return -1; }
+  function startDrink(o){
+    var i = freeWorker();
+    if(st.mode==="mono"){ st.busy[0] = st.busy[0] || o; if(st.busy[0]!==o){ st.queue.push(o); } o.t = 0; return; }
+    if(i>=0){ st.busy[i] = o; o.t = 0; }
+  }
+
+  function tick(){
+    if(!st.baristaUp){ return; }
+    var changed = false;
+    for(var i=0;i<st.workers;i++){
+      var o = st.busy[i];
+      if(o){ o.t++; if(o.t>=3){ st.busy[i]=null; st.done++; changed=true;
+        if(st.mode==="queue"){ log("#"+o.id+" "+o.drink+" hazır. SQS'ten silindi, SNS ile duyuruldu","o"); flash(); }
+        else { log("#"+o.id+" "+o.drink+" hazır","o"); } } }
+      if(!st.busy[i] && st.queue.length && st.mode!=="direct"){ var n = st.queue.shift(); n.t=0; st.busy[i]=n; changed=true; }
+    }
+    if(changed) render();
+  }
+
+  $("b-order").addEventListener("click", order);
+  $("b-rush").addEventListener("click", function(){ for(var i=0;i<6;i++) order(); });
+  $("b-crash").addEventListener("click", function(){
+    st.baristaUp = !st.baristaUp;
+    if(!st.baristaUp){
+      var lost = st.busy.filter(Boolean);
+      if(st.mode==="queue"){ lost.forEach(function(o){ st.queue.unshift(o); }); if(lost.length) log(lost.length+" yarım iş silinmemişti, kuyruğa geri döndü","q"); }
+      else if(st.mode==="mono"){ st.fail += lost.length + st.queue.length; if(lost.length+st.queue.length) log((lost.length+st.queue.length)+" sipariş bellekteydi, process ile birlikte kayboldu","e"); st.queue=[]; }
+      else { st.fail += lost.length; if(lost.length) log(lost.length+" sipariş hazırlanırken kayboldu","e"); }
+      st.busy = [];
+      log(st.mode==="mono" ? "Barista modülü çöktü, bütün uygulama düştü" : "barista-service çöktü","e");
+    } else { log(st.mode==="mono" ? "Uygulama yeniden başladı" : "barista-service geri geldi","o"); }
+    render();
+  });
+  $("b-scale").addEventListener("click", function(){ if(st.mode==="mono") return; if(st.workers<4){ st.workers++; log("barista-service "+st.workers+" kopyaya çıktı. Sadece bu servis ölçeklendi","o"); } else { log("Bu demoda en fazla 4 kopya","q"); } render(); });
+  $("b-reset").addEventListener("click", function(){ var m = st.mode; st = fresh(m); logEl.innerHTML=""; render(); });
+  document.querySelectorAll(".mode").forEach(function(b){ b.addEventListener("click", function(){ st = fresh(b.dataset.mode); logEl.innerHTML=""; log("Mod: "+b.textContent); render(); }); });
+
+  // Realistic opening state: a few orders already flowing through the queue.
+  for(var k=0;k<3;k++){ order(); }
+  render();
+  setInterval(tick, 700);
+})();
+</script>
+</body>
+</html>

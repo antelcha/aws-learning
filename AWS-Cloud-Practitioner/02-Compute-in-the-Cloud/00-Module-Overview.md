@@ -16,6 +16,10 @@
 9. Assessment
 10. Module Summary
 
+## Visual Explainers
+
+- [Mikroservis Kahvehanesi](visuals/mikroservis-kahvehanesi.html): interactive simulator comparing a monolith, directly coupled microservices, and microservices with Amazon SQS and Amazon SNS. Open the file in a browser.
+
 ## Pending Coverage
 
 - Mustafa's own explanation of the Introduction to Amazon EC2 objectives
