@@ -1,7 +1,7 @@
 # Module 2 — Compute in the Cloud
 
 **Course:** AWS Cloud Practitioner  
-**Progress:** In progress — 5 of 10 lessons completed
+**Progress:** In progress — 6 of 10 lessons completed
 
 ## Lessons
 
@@ -10,7 +10,7 @@
 3. [[03-How-to-Provision-AWS-Resources|How to Provision AWS Resources]] — completed
 4. [[04-Demo-Launching-an-Amazon-EC2-Instance|Demo: Launching an Amazon EC2 Instance]] — completed
 5. [[05-Amazon-EC2-Pricing|Amazon EC2 Pricing]] — completed
-6. Scaling Amazon EC2
+6. [[06-Scaling-Amazon-EC2|Scaling Amazon EC2]] — completed
 7. Directing Traffic with Elastic Load Balancing
 8. Messaging and Queuing
 9. Assessment
@@ -23,3 +23,4 @@
 - Mustafa's explanation of managed vs. unmanaged services
 - Mustafa's explanation of the three ways to get an AMI
 - Mustafa's explanation of EC2 pricing options, and its recall check
+- Mustafa's explanation of scaling and its recall check
