@@ -147,3 +147,38 @@ tr.unsuitable td { color: var(--muted); }
 .resp .why { grid-column: 1 / -1; }
 select { font: inherit; padding: 0.3rem; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
 @media (max-width: 600px) { .resp { grid-template-columns: 1fr; } }
+
+.chart { width: 100%; height: auto; display: block; margin: 0.75rem 0 0.25rem; touch-action: none; cursor: crosshair; }
+.chart .grid { stroke: var(--border); stroke-width: 1; }
+.chart .axis { fill: var(--muted); font-size: 11px; }
+.chart .served { fill: var(--accent); }
+.chart .failed { fill: var(--bad); }
+.chart .cap { fill: none; stroke: var(--ok); stroke-width: 2.5; }
+.chart .selected { fill: var(--warn-bg); }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+.key { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
+.key.served { background: var(--accent); }
+.key.failed { background: var(--bad); }
+.key.cap { height: 3px; background: var(--ok); }
+.controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0 1rem; }
+.sim .stats { margin: 0.75rem 0; }
+.lb { display: flex; flex-direction: column; padding: 0.5rem 0.7rem; border: 2px solid var(--accent); border-radius: 8px; }
+.instances { display: grid; gap: 0.3rem; margin-top: 0.4rem; }
+.inst { display: flex; justify-content: space-between; gap: 0.5rem; padding: 0.25rem 0.5rem; border: 1px solid var(--border); border-radius: 6px; font-size: 0.85rem; }
+.inst.serving { border-color: var(--ok); }
+.inst.starting { border-style: dashed; color: var(--muted); }
+.inst.unhealthy, .inst.over { border-color: var(--bad); background: var(--bad-bg); }
+
+.pipeline { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0.5rem; margin: 0.75rem 0; }
+.pipeline .node { flex: 1 1 140px; display: flex; flex-direction: column; gap: 0.2rem; padding: 0.6rem; border: 1px solid var(--border); border-radius: 8px; min-width: 0; }
+.pipeline .node.queue { border: 2px dashed var(--accent); }
+.pipeline .node.down { border-color: var(--bad); background: var(--bad-bg); }
+.pipeline .arrow { align-self: center; color: var(--muted); }
+.tickets { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+.ticket { font-size: 0.75rem; padding: 0 0.35rem; border: 1px solid var(--border); border-radius: 4px; }
+.log { margin: 0.5rem 0; }
+.log li { padding: 0.1rem 0; }
+.log-lost { color: var(--bad); }
+.log-queued { color: var(--accent); }
+.log-ok { color: var(--ok); }
+code { overflow-wrap: anywhere; }

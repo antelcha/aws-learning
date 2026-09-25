@@ -18,7 +18,13 @@ export interface Question {
   beyondCourse?: boolean;
 }
 
-export type SimId = 'pricing' | 'global-infra' | 'shared-responsibility' | 'instance-matcher';
+export type SimId =
+  | 'pricing'
+  | 'global-infra'
+  | 'shared-responsibility'
+  | 'instance-matcher'
+  | 'scaling-elb'
+  | 'messaging';
 
 export interface SimRef {
   id: SimId;

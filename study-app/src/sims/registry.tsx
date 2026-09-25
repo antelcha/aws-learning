@@ -2,7 +2,9 @@ import type { ComponentType } from 'react';
 import type { SimId } from '../engine/types';
 import { GlobalInfraSim } from './global-infra/GlobalInfraSim';
 import { InstanceMatcherSim } from './instance-matcher/InstanceMatcherSim';
+import { MessagingSim } from './messaging/MessagingSim';
 import { PricingSim } from './pricing/PricingSim';
+import { ScalingSim } from './scaling/ScalingSim';
 import { SharedResponsibilitySim } from './shared-responsibility/SharedResponsibilitySim';
 
 export interface SimProps {
@@ -14,4 +16,6 @@ export const sims: Record<SimId, ComponentType<SimProps>> = {
   'global-infra': GlobalInfraSim,
   'shared-responsibility': SharedResponsibilitySim,
   'instance-matcher': InstanceMatcherSim,
+  'scaling-elb': ScalingSim,
+  messaging: MessagingSim,
 };
