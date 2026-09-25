@@ -1,7 +1,7 @@
 # Module 2 — Compute in the Cloud
 
 **Course:** AWS Cloud Practitioner  
-**Progress:** In progress — 7 of 10 lessons completed
+**Progress:** In progress — 8 of 10 lessons completed
 
 ## Lessons
 
@@ -12,7 +12,7 @@
 5. [[05-Amazon-EC2-Pricing|Amazon EC2 Pricing]] — completed
 6. [[06-Scaling-Amazon-EC2|Scaling Amazon EC2]] — completed
 7. [[07-Directing-Traffic-with-Elastic-Load-Balancing|Directing Traffic with Elastic Load Balancing]] — completed
-8. Messaging and Queuing
+8. [[08-Messaging-and-Queuing|Messaging and Queuing]] — completed
 9. Assessment
 10. Module Summary
 
@@ -29,3 +29,4 @@
 - Mustafa's explanation of EC2 pricing options, and its recall check
 - Mustafa's explanation of scaling and its recall check
 - Mustafa's explanation of ELB and its recall check
+- Mustafa's explanation of messaging and queuing
