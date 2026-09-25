@@ -25,7 +25,7 @@ npm run dev        # http://localhost:5173
 
 Running locally costs $0: no AWS resources, no backend. Progress stays in the browser's `localStorage`; use **Progress → Export JSON** to keep a copy. Hosting on Amazon S3 and CloudFront is a separate, later project with its own cost notes and teardown.
 
-Prices in the EC2 pricing simulation are illustrative example values, not AWS quotes (course maximum discounts, checked 2026-09-24).
+Prices in the EC2 pricing simulation are illustrative example values, not AWS quotes (course maximum discounts, checked 2026-09-24). The scaling and messaging simulations use made-up request and instance counts with no prices.
 
 ## Add a lesson
 
