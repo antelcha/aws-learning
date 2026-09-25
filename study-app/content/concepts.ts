@@ -20,6 +20,13 @@ export const concepts = [
   'reserved-instances',
   'spot',
   'dedicated',
+  'scalability-elasticity',
+  'auto-scaling',
+  'load-balancing',
+  'loose-coupling',
+  'sqs',
+  'sns',
+  'eventbridge',
 ] as const;
 
 export type Concept = (typeof concepts)[number];

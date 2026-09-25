@@ -1,4 +1,5 @@
 import { useRef, useState, type PointerEvent } from 'react';
+import type { SimProps } from '../registry';
 import {
   CAPACITY_PER_INSTANCE,
   STEPS,
@@ -35,7 +36,8 @@ const STATE_LABEL: Record<InstanceView['state'], string> = {
   unhealthy: 'AZ down',
 };
 
-export function ScalingSim() {
+/** Config: `loadBalancer` (boolean) sets whether ELB starts enabled; default true. */
+export function ScalingSim({ config: simConfig }: SimProps) {
   const [demand, setDemand] = useState<number[]>(TRAFFIC_PRESETS[2].demand);
   const [config, setConfig] = useState<ScalingConfig>({
     min: 2,
@@ -44,7 +46,7 @@ export function ScalingSim() {
     mode: 'dynamic',
     launchLag: 2,
     azCount: 2,
-    loadBalancer: true,
+    loadBalancer: simConfig?.loadBalancer !== false,
   });
   const [hour, setHour] = useState(19);
   const drawing = useRef(false);
