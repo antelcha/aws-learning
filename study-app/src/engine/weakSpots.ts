@@ -19,7 +19,8 @@ export function recordMiss(spots: WeakSpots, concepts: string[], now: Date): Wea
 
 export function recordWeakSpotResult(spots: WeakSpots, concept: string, correct: boolean, now: Date): WeakSpots {
   const current = spots[concept];
-  if (!current) return spots;
+  // Only a due concept can move: a retry in the same round must not advance or clear it early.
+  if (!current || new Date(current.due).getTime() > now.getTime()) return spots;
   const next = { ...spots };
   if (!correct) {
     next[concept] = schedule(0, now);

@@ -58,6 +58,12 @@ describe('recordWeakSpotResult', () => {
       expect(recordWeakSpotResult(spots, 'pricing', false, now).pricing).toEqual({ step: 0, due: plus(1) });
     }
   });
+  it('ignores answers for a concept that is not due, so a retry cannot advance it again', () => {
+    const spots: WeakSpots = { pricing: { step: 0, due: now.toISOString() } };
+    const once = recordWeakSpotResult(spots, 'pricing', true, now);
+    expect(recordWeakSpotResult(once, 'pricing', true, now)).toBe(once);
+    expect(recordWeakSpotResult(once, 'pricing', false, now)).toBe(once);
+  });
   it('does not mutate its input', () => {
     const spots: WeakSpots = { pricing: { step: 0, due: now.toISOString() } };
     recordWeakSpotResult(spots, 'pricing', true, now);
