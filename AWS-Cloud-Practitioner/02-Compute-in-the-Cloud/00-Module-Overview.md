@@ -1,7 +1,7 @@
 # Module 2 — Compute in the Cloud
 
 **Course:** AWS Cloud Practitioner  
-**Progress:** In progress — 8 of 10 lessons completed
+**Progress:** Module completed — Mustafa confirmed finishing all 10 lessons on 2026-09-26
 
 ## Lessons
 
@@ -13,8 +13,8 @@
 6. [[06-Scaling-Amazon-EC2|Scaling Amazon EC2]] — completed
 7. [[07-Directing-Traffic-with-Elastic-Load-Balancing|Directing Traffic with Elastic Load Balancing]] — completed
 8. [[08-Messaging-and-Queuing|Messaging and Queuing]] — completed
-9. Assessment
-10. Module Summary
+9. Assessment — completed (score not recorded)
+10. Module Summary — completed (no notes captured)
 
 ## Visual Explainers
 
@@ -30,3 +30,4 @@
 - Mustafa's explanation of scaling and its recall check
 - Mustafa's explanation of ELB and its recall check
 - Mustafa's explanation of messaging and queuing
+- End-of-module review (about 10 exam-style questions weighted toward `#misconception` items) and a project suggestion — deferred while per-lesson questions are paused
