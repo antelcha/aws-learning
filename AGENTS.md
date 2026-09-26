@@ -7,6 +7,7 @@
 - Do not assume prior AWS knowledge. Explain AWS-specific concepts when they first appear and connect them to familiar software concepts where useful.
 - Mustafa learns best by understanding the problem and underlying principle, then applying it to a concrete use case.
 - Goal: earn the AWS Certified Cloud Practitioner certification and build hands-on projects alongside the course.
+- He watched this course quickly in about two days in 2025 without deep understanding; this pass aims for understanding and retention, not speed.
 - Use the AWS Skill Builder course order as the primary route. Do not create a separate learning plan unless Mustafa asks for one.
 
 ## Lesson Loop
